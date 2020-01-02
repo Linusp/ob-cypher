@@ -146,7 +146,6 @@
 
 (defun org-babel-execute:cypher (body params)
   (let* ((host (or (cdr (assoc :host params) ) "127.0.0.1"))
-         (port (or (cdr (assoc :port params) ) 1337))
          (username (or (cdr (assoc :username params) ) "neo4j"))
          (password (or (cdr (assoc :password params) ) "neo4j"))
 	 (authstring (base64-encode-string (concat username ":" password)))
@@ -154,7 +153,7 @@
          (result-type (cdr (assoc :result-type params)))
          (output (cdr (assoc :file params)))
          (body (if (s-ends-with? ";" body) body (s-append ";" body))))
-    (if output (ob-cypher/dot body host http-port output authstring) (ob-cypher/rest body host port authstring))))
+    (if output (ob-cypher/dot body host http-port output authstring) (ob-cypher/rest body host http-port authstring))))
 
 (provide 'ob-cypher)
 ;;; ob-cypher.el ends here
